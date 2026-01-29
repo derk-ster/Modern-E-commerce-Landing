@@ -3,6 +3,8 @@ const slides = Array.from(document.querySelectorAll(".testimonial-card"));
 const prevBtn = document.querySelector(".carousel-btn.prev");
 const nextBtn = document.querySelector(".carousel-btn.next");
 const navLinks = document.querySelectorAll(".nav-links a");
+const loader = document.querySelector(".page-loader");
+const revealItems = document.querySelectorAll(".reveal-on-scroll");
 
 let index = 0;
 let intervalId;
@@ -56,3 +58,36 @@ navLinks.forEach((link) => {
 });
 
 startAutoSlide();
+
+const showPage = () => {
+  if (!loader) {
+    return;
+  }
+  loader.classList.add("hidden");
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 1200);
+};
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+window.addEventListener("load", () => {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  setTimeout(showPage, 1200);
+});
+
+const observer = new IntersectionObserver(
+  (entries, observe) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observe.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
+
+revealItems.forEach((item) => observer.observe(item));
