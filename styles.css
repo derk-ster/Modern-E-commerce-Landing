@@ -273,6 +273,8 @@ main {
   padding: 16px;
   box-shadow: var(--shadow);
   transition: transform 0.3s ease, background 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
@@ -284,10 +286,13 @@ main {
   overflow: hidden;
   border-radius: var(--radius);
   margin-bottom: 16px;
+  height: 190px;
 }
 
 .product-image img {
   transition: transform 0.4s ease;
+  height: 100%;
+  object-fit: cover;
 }
 
 .product-card:hover img {
